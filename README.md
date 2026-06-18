@@ -1,5 +1,7 @@
 # 🌿 Umas Wellness Spa - Luxury Spa Booking System
 
+🔗 **Live Demo**: [umas-wellness-spa.onrender.com](https://umas-wellness-spa.onrender.com)
+
 Welcome to the **Umas Wellness Spa** web application. This is a fully functional, high-performance, and visually stunning single-page booking application designed to manage luxury spa reservations. It features secure user authentication, an interactive service catalog, dynamic scheduling, and a database-backed dashboard.
 
 ---
