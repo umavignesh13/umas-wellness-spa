@@ -1,5 +1,8 @@
-const { Pool } = require('pg');
+const { Pool, types } = require('pg');
 const path = require('path');
+
+// Force PostgreSQL DECIMAL/NUMERIC (OID 1700) to be parsed as JavaScript floats
+types.setTypeParser(1700, val => parseFloat(val));
 
 const isPostgres = !!process.env.DATABASE_URL;
 
@@ -242,12 +245,30 @@ async function run(sql, params = []) {
   }
 }
 
+// Defensive helper to ensure numeric database columns are cast to JavaScript numbers
+function castNumericFields(rows) {
+  if (!rows) return rows;
+  const isArray = Array.isArray(rows);
+  const items = isArray ? rows : [rows];
+  items.forEach(item => {
+    if (item) {
+      if (item.price !== undefined && typeof item.price === 'string') {
+        item.price = parseFloat(item.price);
+      }
+      if (item.service_price !== undefined && typeof item.service_price === 'string') {
+        item.service_price = parseFloat(item.service_price);
+      }
+    }
+  });
+  return rows;
+}
+
 async function get(sql, params = []) {
   if (isPostgres) {
     const pgSql = translateSql(sql);
     const res = await pool.query(pgSql, params);
-    // SQLite returns undefined if no rows are found, let's keep consistency
-    return res.rows[0] || undefined;
+    const row = res.rows[0] || undefined;
+    return castNumericFields(row);
   } else {
     return new Promise((resolve, reject) => {
       sqliteDb.get(sql, params, (err, row) => {
@@ -265,7 +286,7 @@ async function all(sql, params = []) {
   if (isPostgres) {
     const pgSql = translateSql(sql);
     const res = await pool.query(pgSql, params);
-    return res.rows;
+    return castNumericFields(res.rows);
   } else {
     return new Promise((resolve, reject) => {
       sqliteDb.all(sql, params, (err, rows) => {
