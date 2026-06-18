@@ -1,4 +1,3 @@
-const sqlite3 = require('sqlite3').verbose();
 const { Pool } = require('pg');
 const path = require('path');
 
@@ -20,6 +19,7 @@ if (isPostgres) {
   initPostgres();
 } else {
   console.log('Local: Connecting to SQLite database...');
+  const sqlite3 = require('sqlite3').verbose();
   const dbPath = path.join(__dirname, 'spa.db');
   sqliteDb = new sqlite3.Database(dbPath, (err) => {
     if (err) {
