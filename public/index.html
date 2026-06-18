@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Umas Wellness Spa - Luxury Spa & Massage Parlor</title>
+  <meta name="description" content="Indulge in Umas Wellness Spa. Browse our catalog of Swedish, deep tissue, aromatherapy and hot stone massage treatments, and book your personalized session online.">
+  <!-- Google Fonts: Playfair Display for headers, Inter for UI text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons for modern visuals -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header id="main-header">
+    <div class="header-container">
+      <a href="/" class="logo-link" id="nav-logo">
+        <span class="logo-text">UMAS</span>
+        <span class="logo-subtext">WELLNESS SPA</span>
+      </a>
+      <nav id="nav-menu">
+        <a href="#hero" class="nav-item active" id="nav-link-home">Home</a>
+        <a href="#catalog-section" class="nav-item" id="nav-link-services">Services</a>
+        <a href="#booking-section" class="nav-item" id="nav-link-book">Book Session</a>
+        <a href="#dashboard-section" class="nav-item hidden" id="nav-link-dashboard">My Bookings</a>
+      </nav>
+      <div class="auth-buttons" id="auth-buttons-container">
+        <!-- Logged Out State -->
+        <button class="btn btn-outline" id="btn-login-trigger">Sign In</button>
+        <button class="btn btn-primary" id="btn-signup-trigger">Register</button>
+        
+        <!-- Logged In State (Hidden initially) -->
+        <div class="user-profile-menu hidden" id="user-profile-menu">
+          <span class="user-greeting" id="user-greeting-text">Welcome, Guest</span>
+          <button class="btn btn-outline" id="btn-logout">Sign Out</button>
+        </div>
+      </div>
+      <button class="mobile-nav-toggle" id="btn-mobile-menu" aria-label="Toggle Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section id="hero" class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title" id="main-hero-title">Experience Absolute Serenity</h1>
+      <p class="hero-subtitle">Escape the noise and rejuvenate your spirit with Aura's signature massage therapies. Handcrafted wellness designed for ultimate balance and relief.</p>
+      <div class="hero-cta-group">
+        <a href="#catalog-section" class="btn btn-primary btn-large" id="btn-explore-catalog">Explore Massages</a>
+        <a href="#booking-section" class="btn btn-outline btn-large" id="btn-quick-book">Book Slot Now</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-number">10k+</span>
+          <span class="stat-label">Sessions Booked</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">15+</span>
+          <span class="stat-label">Expert Therapists</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <span class="stat-number">4.9★</span>
+          <span class="stat-label">Client Rating</span>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-down-indicator">
+      <a href="#catalog-section" aria-label="Scroll to Catalog"><i class="fa-solid fa-chevron-down animate-bounce"></i></a>
+    </div>
+  </section>
+
+  <main class="content-wrapper">
+    <!-- Service Catalog Section -->
+    <section id="catalog-section" class="section-container">
+      <div class="section-header">
+        <span class="section-tagline">Signature Treatments</span>
+        <h2 class="section-title">Discover Our Massage Therapies</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <!-- Categories Filter Tabs -->
+      <div class="filter-tabs" id="catalog-filter-tabs">
+        <button class="filter-tab active" data-filter="all" id="tab-filter-all">All Massages</button>
+        <button class="filter-tab" data-filter="Basic" id="tab-filter-basic">Basic</button>
+        <button class="filter-tab" data-filter="Intermediate" id="tab-filter-intermediate">Intermediate</button>
+        <button class="filter-tab" data-filter="Premium" id="tab-filter-premium">Premium</button>
+      </div>
+
+      <!-- Catalog Grid -->
+      <div class="catalog-grid" id="services-catalog-grid">
+        <!-- Dynmically loaded cards -->
+        <div class="loading-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i> Preparing massage catalog...</div>
+      </div>
+    </section>
+
+    <!-- Slot Booking Section -->
+    <section id="booking-section" class="section-container bg-alt">
+      <div class="section-header">
+        <span class="section-tagline">Online Reservation</span>
+        <h2 class="section-title">Book Your Serenity Slot</h2>
+        <div class="section-divider"></div>
+        <p class="section-description">Select your therapy, pick a date, choose your duration, and reserve a personalized wellness slot. Operations run daily from 9:00 AM to 10:00 PM.</p>
+      </div>
+
+      <div class="booking-grid">
+        <!-- Booking Settings Form -->
+        <div class="booking-card form-card">
+          <h3 class="booking-card-title"><i class="fa-regular fa-calendar-check icon-gold"></i> Reservation Details</h3>
+          
+          <form id="booking-settings-form">
+            <div class="form-group">
+              <label for="select-booking-service">Choose Treatment</label>
+              <select id="select-booking-service" required>
+                <option value="" disabled selected>Select a massage therapy...</option>
+                <!-- Dynamically populated options -->
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="input-booking-date">Select Date</label>
+              <input type="date" id="input-booking-date" required>
+              <span class="field-hint">Bookings available up to 30 days in advance.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="select-booking-duration">Select Duration</label>
+              <select id="select-booking-duration" required>
+                <option value="30" selected>30 Minutes</option>
+                <option value="60">1 Hour</option>
+                <option value="90">1 Hour 30 Minutes</option>
+                <option value="120">2 Hours</option>
+                <option value="150">2 Hours 30 Minutes</option>
+                <option value="180">3 Hours</option>
+                <option value="210">3 Hours 30 Minutes</option>
+                <option value="240">4 Hours</option>
+              </select>
+            </div>
+          </form>
+        </div>
+
+        <!-- Time Slot Selection Grid -->
+        <div class="booking-card slot-card">
+          <h3 class="booking-card-title"><i class="fa-regular fa-clock icon-gold"></i> Choose Time Slot</h3>
+          
+          <div class="selected-service-banner hidden" id="booking-summary-banner">
+            <span id="summary-service-name">Swedish Massage</span> &middot; 
+            <span id="summary-service-duration">30 Mins</span> &middot; 
+            <span id="summary-service-price">₹1800.00</span>
+          </div>
+
+          <div id="slots-instructions" class="slots-message">
+            <i class="fa-solid fa-arrow-left icon-animate"></i> Please select a service and booking date to search for available time slots.
+          </div>
+
+          <div id="slots-loading" class="slots-message hidden">
+            <i class="fa-solid fa-spinner fa-spin"></i> Checking therapist schedules...
+          </div>
+
+          <!-- Time Grid Container -->
+          <div class="slots-grid hidden" id="time-slots-grid">
+            <!-- Dynamically populated buttons -->
+          </div>
+
+          <div class="booking-legend hidden" id="slots-legend">
+            <div class="legend-item"><span class="legend-box available"></span> Available</div>
+            <div class="legend-item"><span class="legend-box booked"></span> Booked / Locked</div>
+          </div>
+
+          <button class="btn btn-primary btn-block btn-large hidden" id="btn-submit-booking" disabled>Confirm Reservation</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Client Dashboard Section (My Bookings) -->
+    <section id="dashboard-section" class="section-container hidden">
+      <div class="section-header">
+        <span class="section-tagline">Client Area</span>
+        <h2 class="section-title">Your Scheduled Sessions</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="dashboard-card">
+        <div class="dashboard-header">
+          <div class="client-info">
+            <i class="fa-regular fa-user-circle avatar-icon"></i>
+            <div>
+              <h3 id="dashboard-client-name">Loading...</h3>
+              <p id="dashboard-client-email">loading@aura.com</p>
+            </div>
+          </div>
+          <button class="btn btn-outline" id="btn-dashboard-refresh"><i class="fa-solid fa-arrows-rotate"></i> Refresh list</button>
+        </div>
+
+        <div class="bookings-table-container" id="bookings-list-container">
+          <!-- Dynamically generated list -->
+          <div class="loading-spinner"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading bookings history...</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Login/Signup Modal Backdrop -->
+  <div class="modal-backdrop hidden" id="auth-modal">
+    <div class="modal-card">
+      <button class="modal-close" id="btn-close-modal" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+      
+      <!-- Login Form View -->
+      <div class="auth-view" id="auth-login-view">
+        <h3 class="auth-title">Welcome Back</h3>
+        <p class="auth-subtitle">Sign in to book sessions and manage your wellness schedule.</p>
+        
+        <div class="alert alert-danger hidden" id="login-error-alert">Invalid login details.</div>
+
+        <form id="form-login">
+          <div class="form-group">
+            <label for="input-login-id">Username or Email</label>
+            <div class="input-icon-wrapper">
+              <i class="fa-regular fa-envelope input-icon"></i>
+              <input type="text" id="input-login-id" placeholder="Enter username or email" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="input-login-password">Password</label>
+            <div class="input-icon-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="input-login-password" placeholder="Enter password" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-large" id="btn-login-submit">Sign In</button>
+        </form>
+        
+        <p class="auth-switch-text">New to Umas Spa? <a href="#" id="link-switch-signup">Create an account</a></p>
+      </div>
+
+      <!-- Signup Form View -->
+      <div class="auth-view hidden" id="auth-signup-view">
+        <h3 class="auth-title">Create Aura Profile</h3>
+        <p class="auth-subtitle">Sign up to get personalized therapist slot allocations.</p>
+        
+        <div class="alert alert-danger hidden" id="signup-error-alert">Registration failed.</div>
+
+        <form id="form-signup">
+          <div class="form-group">
+            <label for="input-signup-username">Username</label>
+            <div class="input-icon-wrapper">
+              <i class="fa-regular fa-user input-icon"></i>
+              <input type="text" id="input-signup-username" placeholder="Choose username" required minlength="3">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="input-signup-email">Email Address</label>
+            <div class="input-icon-wrapper">
+              <i class="fa-regular fa-envelope input-icon"></i>
+              <input type="email" id="input-signup-email" placeholder="example@domain.com" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="input-signup-phone">Phone Number (Optional)</label>
+            <div class="input-icon-wrapper">
+              <i class="fa-solid fa-phone input-icon"></i>
+              <input type="tel" id="input-signup-phone" placeholder="Enter 10-digit number">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="input-signup-password">Password</label>
+            <div class="input-icon-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="input-signup-password" placeholder="Min. 6 characters" required minlength="6">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-large" id="btn-signup-submit">Register Account</button>
+        </form>
+        
+        <p class="auth-switch-text">Already registered? <a href="#" id="link-switch-login">Log In</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Banner -->
+  <div class="toast-notification hidden" id="toast-message">
+    <i class="fa-regular fa-circle-check toast-icon"></i>
+    <span id="toast-text">Success!</span>
+  </div>
+
+  <!-- Footer -->
+  <footer id="main-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="logo-text">UMAS</span>
+        <span class="logo-subtext">WELLNESS SPA</span>
+        <p class="footer-tagline">Premium wellness and massage parlor since 2020. Relax, recharge, and restore balance.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h4>Working Hours</h4>
+        <ul>
+          <li>Monday - Sunday</li>
+          <li>9:00 AM - 10:00 PM</li>
+          <li>Open on public holidays</li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Wellness Center</h4>
+        <ul>
+          <li><i class="fa-solid fa-location-dot footer-icon"></i> Guntur, Nehru Nagar 2nd line</li>
+          <li><i class="fa-solid fa-phone footer-icon"></i> +91 85000 40962</li>
+          <li><i class="fa-solid fa-envelope footer-icon"></i> qdipify@gmail.com</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Umas Wellness Spa & Massage Parlor. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>
